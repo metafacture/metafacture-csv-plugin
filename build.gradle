@@ -26,6 +26,6 @@ task fatJar(type: Jar) {
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
-    archiveName = archivesBaseName + '-' + version + '-plugin' + '.jar'
+    archiveName = archivesBaseName.replace('-plugin', '') + '-' + version + '-plugin' + '.jar'
     with jar
 }
