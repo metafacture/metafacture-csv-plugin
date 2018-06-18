@@ -1,0 +1,86 @@
+= metafacture-csv-plugin
+:toc:
+
+A plugin for link:https://github.com/metafacture/metafacture-core[metafacture] that extends the standard CSV module.
+
+== Build
+
+image::https://jitpack.io/v/eberhardtj/metafacture-csv-extension.svg[link="https://jitpack.io/#eberhardtj/metafacture-csv-extension"]
+
+```
+gradlew test fatJar
+```
+
+Produces `metafacture-csv-VERSION-plugin.jar` in `build/libs` .
+
+Place the build JAR inside the `plugins` directory of your `metafacture-core` distribution.
+
+== Command Reference
+
+|===
+|Command | In | Out
+
+|decode-literal-csv
+|String
+|StreamReceiver
+
+|encode-literal-csv
+|StreamReceiver
+|String
+
+|===
+
+=== decode-literal-csv
+
+==== Description
+
+Reads a csv line and constructs a record with literals.
+The record id represents the row number and the literal names represent the column numbers.
+The literal value holds the column content.
+
+NOTE: The enumeration starts with 1.
+
+==== Syntax
+
+```
+decode-literal-csv([separator])
+```
+
+==== Parameters
+
+* `separator`: Delimiter symbol (Default: comma).
+
+==== Example
+
+Flux:
+
+```
+> | decode-literal-csv | ...
+```
+
+
+=== encode-literal-csv
+
+==== Description
+
+Encodes each record as a csv line.
+Each row contains all literal values that exist in a record.
+
+==== Syntax
+
+```
+encoder-literal-csv([separator],[includeRecordId])
+```
+
+==== Parameters
+
+* `separator`: Delimiter symbol (Default: comma)
+* `includeRecordId`: Add the record id as first element of each line (Default: false).
+
+==== Example
+
+Flux:
+
+```
+... | encoder-literal-csv(separator=",", includeRecordId="true") | print;
+```

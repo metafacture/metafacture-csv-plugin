@@ -1,0 +1,31 @@
+group 'com.github.eberhardtj'
+version '0.1.0'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.metafacture:metafacture-framework:5.0.0'
+    implementation 'com.opencsv:opencsv:4.2'
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.5.5'
+}
+
+task fatJar(type: Jar) {
+    dependencies {
+        compile 'com.opencsv:opencsv:4.2'
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    archiveName = archivesBaseName + '-' + version + '-plugin' + '.jar'
+    with jar
+}
