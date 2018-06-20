@@ -20,67 +20,45 @@ Place the build JAR inside the `plugins` directory of your `metafacture-core` di
 |===
 |Command | In | Out
 
-|decode-literal-csv
-|String
-|StreamReceiver
-
-|encode-literal-csv
+|encode-csv
 |StreamReceiver
 |String
 
 |===
 
-=== decode-literal-csv
+=== encode-csv
 
 ==== Description
 
-Reads a csv line and constructs a record with literals.
-The record id represents the row number and the literal names represent the column numbers.
-The literal value holds the column content.
+A simple encoder that constructs a table of __Comma-separated values__ (CSV).
 
-NOTE: The enumeration starts with 1.
+Structure:
+
+* Each record represents a row
+** The sequential order of literal _values_ forms a *row*
+** The sequential order of literal _names_ of the first record is used as _header_ (Optional)
+* Each value in a row is surrounded by quotation marks (Quote Character:__"__)
+
+NOTE: If a sequence of literals (2 or more) share the same name,
+the values of those literals will be collected in the corresponding row.
+The column will contain a inner row (a nested csv row).
 
 ==== Syntax
 
 ```
-decode-literal-csv([separator])
-```
-
-==== Parameters
-
-* `separator`: Delimiter symbol (Default: comma).
-
-==== Example
-
-Flux:
-
-```
-> | decode-literal-csv | ...
-```
-
-
-=== encode-literal-csv
-
-==== Description
-
-Encodes each record as a csv line.
-Each row contains all literal values that exist in a record.
-
-==== Syntax
-
-```
-encoder-literal-csv([separator],[includeRecordId])
+encode-csv([separator],[includeHeader],[includeRecordId])
 ```
 
 ==== Parameters
 
 * `separator`: Delimiter symbol (Default: comma)
-* `includeRecordId`: Add the record id as first element of each line (Default: false).
+* `includeHeader`: Add a header with column names (Default: false).
+* `includeRecordId`: Add the record id as first element of each row (Default: false).
 
 ==== Example
 
 Flux:
 
 ```
-... | encoder-literal-csv(separator=",", includeRecordId="true") | print;
+... | encoder-csv(separator=",", includeRecordId="true") | print;
 ```
