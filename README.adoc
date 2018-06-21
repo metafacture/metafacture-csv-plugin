@@ -37,7 +37,13 @@ Structure:
 * Each record represents a row
 ** The sequential order of literal _values_ forms a *row*
 ** The sequential order of literal _names_ of the first record is used as _header_ (Optional)
-* Each value in a row is surrounded by quotation marks (Quote Character:__"__)
+
+CSV Dialect:
+
+* Delimiter: ,
+* Quote Char: "
+* Line Terminator: \n
+* Quoting: Quote All
 
 NOTE: If a sequence of literals (2 or more) share the same name,
 the values of those literals will be collected in the corresponding row.
