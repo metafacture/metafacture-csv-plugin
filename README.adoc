@@ -45,10 +45,6 @@ CSV Dialect:
 * Line Terminator: \n
 * Quoting: Quote All
 
-NOTE: If a sequence of literals (2 or more) share the same name,
-the values of those literals will be collected in the corresponding row.
-The column will contain a inner row (a nested csv row).
-
 ==== Syntax
 
 ```

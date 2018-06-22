@@ -95,7 +95,6 @@ public class SimpleCsvEncoderTest {
         ordered.verify(receiver).process(ticksToQuotes("'1' 'a' 'b'"));
     }
 
-
     @Test
     public void shouldReceiveThreeRows() {
         encoder.startRecord("1");
@@ -126,7 +125,7 @@ public class SimpleCsvEncoderTest {
         encoder.literal("column 1", "a");
         encoder.literal("column 2", "b");
         encoder.endRecord();
-        encoder.startRecord("1");
+        encoder.startRecord("2");
         encoder.literal("column 1", "c");
         encoder.literal("column 2", "d");
         encoder.endRecord();
@@ -148,7 +147,7 @@ public class SimpleCsvEncoderTest {
         encoder.closeStream();
 
         final InOrder ordered = inOrder(receiver);
-        ordered.verify(receiver).process(ticksToQuotes("'a' '''a1'' ''a2'' ''a3'''"));
+        ordered.verify(receiver).process(ticksToQuotes("'a' 'a1' 'a2' 'a3'"));
     }
 
     private String ticksToQuotes(String s) {

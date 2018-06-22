@@ -16,8 +16,6 @@
 package org.metafacture.csv;
 
 import com.opencsv.CSVWriter;
-import com.opencsv.CSVWriterBuilder;
-import com.opencsv.ICSVWriter;
 import org.metafacture.framework.FluxCommand;
 import org.metafacture.framework.MetafactureException;
 import org.metafacture.framework.ObjectReceiver;
@@ -52,14 +50,8 @@ public class SimpleCsvEncoder extends DefaultStreamPipe<ObjectReceiver<String>> 
 
     /** List of items that will be written to a row */
     private List<String> rowItems;
-    /** Last encountered literal name */
-    private String lastLiteralName;
-    /** List of literal values that has the same name */
-    private List<String> literalValues;
     /** Flag for the first record encounter */
     private boolean isFirstRecord;
-    /** Flag for the first literal encounter in a record */
-    private boolean isFirstLiteral;
 
     private List<String> header;
     private char separator;
@@ -77,11 +69,7 @@ public class SimpleCsvEncoder extends DefaultStreamPipe<ObjectReceiver<String>> 
         this.header = new ArrayList<>();
 
         this.isFirstRecord = true;
-        this.isFirstLiteral = true;
-
         this.rowItems = new ArrayList<>();
-        this.lastLiteralName = null;
-        this.literalValues = new ArrayList<>();
     }
 
     /**
@@ -124,23 +112,7 @@ public class SimpleCsvEncoder extends DefaultStreamPipe<ObjectReceiver<String>> 
         return list.toArray(new String[length]);
     }
 
-    private String innerRowOf(List<String> items) {
-        StringWriter writer = new StringWriter();
-        ICSVWriter csvWriter = new CSVWriterBuilder(writer)
-                .withSeparator(separator)
-                .withQuoteChar(CSVWriter.DEFAULT_QUOTE_CHARACTER)
-                .withLineEnd("")
-                .build();
-
-        String row[] = arrayOf(items);
-        csvWriter.writeNext(row);
-        String line = writer.toString().trim();
-        return line;
-    }
-
     private void resetCaches() {
-        isFirstLiteral = true;
-        literalValues = new ArrayList<>();
         rowItems = new ArrayList<>();
     }
 
@@ -180,9 +152,6 @@ public class SimpleCsvEncoder extends DefaultStreamPipe<ObjectReceiver<String>> 
             isFirstRecord = false;
         }
 
-        String rowItem = literalValues.size() == 1 ? literalValues.get(0) : innerRowOf(literalValues);
-        rowItems.add(rowItem);
-
         writeRow(rowItems);
 
         resetCaches();
@@ -193,23 +162,7 @@ public class SimpleCsvEncoder extends DefaultStreamPipe<ObjectReceiver<String>> 
         if (isFirstRecord) {
             header.add(name);
         }
-
-        if (isFirstLiteral) {
-            lastLiteralName = name;
-            isFirstLiteral = false;
-        }
-
-        if (name.equals(lastLiteralName)) {
-            literalValues.add(value);
-        } else {
-            String rowItem = literalValues.size() == 1 ? literalValues.get(0) : innerRowOf(literalValues);
-            rowItems.add(rowItem);
-
-            literalValues = new ArrayList<>();
-            literalValues.add(value);
-        }
-
-        lastLiteralName = name;
+        rowItems.add(value);
     }
 
     @Override
@@ -228,11 +181,7 @@ public class SimpleCsvEncoder extends DefaultStreamPipe<ObjectReceiver<String>> 
         this.header = new ArrayList<>();
 
         this.isFirstRecord = true;
-        this.isFirstLiteral = true;
-
         this.rowItems = new ArrayList<>();
-        this.lastLiteralName = null;
-        this.literalValues = new ArrayList<>();
     }
 
     @Override
