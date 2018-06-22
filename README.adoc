@@ -45,6 +45,12 @@ CSV Dialect:
 * Line Terminator: \n
 * Quoting: Quote All
 
+Example Output:
+
+```
+"output","example","2018"
+```
+
 ==== Syntax
 
 ```
