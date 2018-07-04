@@ -55,6 +55,7 @@ public class SimpleCsvEncoder extends DefaultStreamPipe<ObjectReceiver<String>> 
 
     private List<String> header;
     private char separator;
+    private boolean noQuotes;
     private boolean includeHeader;
     private boolean includeRecordId;
 
@@ -64,8 +65,9 @@ public class SimpleCsvEncoder extends DefaultStreamPipe<ObjectReceiver<String>> 
 
     public SimpleCsvEncoder(char separator) {
         this.separator = separator;
-        this.includeRecordId = false;
+        this.noQuotes = false;
         this.includeHeader = false;
+        this.includeRecordId = false;
         this.header = new ArrayList<>();
 
         this.isFirstRecord = true;
@@ -93,6 +95,10 @@ public class SimpleCsvEncoder extends DefaultStreamPipe<ObjectReceiver<String>> 
         this.separator = separator.charAt(0);
     }
 
+    public void setNoQuotes(boolean noQuotes) {
+        this.noQuotes = noQuotes;
+    }
+
     public void setSeparator(char separator) {
         this.separator = separator;
     }
@@ -102,7 +108,7 @@ public class SimpleCsvEncoder extends DefaultStreamPipe<ObjectReceiver<String>> 
         String emptyLineEnd = "";
         csvWriter = new CSVWriter(writer,
                 separator,
-                CSVWriter.DEFAULT_QUOTE_CHARACTER,
+                noQuotes ? CSVWriter.NO_QUOTE_CHARACTER : CSVWriter.DEFAULT_QUOTE_CHARACTER,
                 CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                 emptyLineEnd);
     }

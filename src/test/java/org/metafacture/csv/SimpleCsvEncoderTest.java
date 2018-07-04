@@ -51,6 +51,19 @@ public class SimpleCsvEncoderTest {
     }
 
     @Test
+    public void shouldHaveNoQuotes() {
+        encoder.setNoQuotes(true);
+        encoder.startRecord("1");
+        encoder.literal("column 1", "a");
+        encoder.literal("column 2", "b");
+        encoder.endRecord();
+        encoder.closeStream();
+
+        final InOrder ordered = inOrder(receiver);
+        ordered.verify(receiver).process("a b");
+    }
+
+    @Test
     public void shouldReceiveSingleRecordWithHeader() {
         encoder.setIncludeHeader(true);
 

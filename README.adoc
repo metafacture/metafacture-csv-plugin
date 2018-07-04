@@ -60,6 +60,7 @@ encode-csv([separator],[includeHeader],[includeRecordId])
 ==== Parameters
 
 * `separator`: Delimiter symbol (Default: comma)
+* `noQuotes`: Disables the usage of a quote character.
 * `includeHeader`: Add a header with column names (Default: false).
 * `includeRecordId`: Add the record id as first element of each row (Default: false).
 
