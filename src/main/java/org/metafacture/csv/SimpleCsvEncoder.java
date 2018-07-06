@@ -60,11 +60,7 @@ public class SimpleCsvEncoder extends DefaultStreamPipe<ObjectReceiver<String>> 
     private boolean includeRecordId;
 
     public SimpleCsvEncoder() {
-        this(CSVWriter.DEFAULT_SEPARATOR);
-    }
-
-    public SimpleCsvEncoder(char separator) {
-        this.separator = separator;
+        this.separator = CSVWriter.DEFAULT_SEPARATOR;
         this.noQuotes = false;
         this.includeHeader = false;
         this.includeRecordId = false;

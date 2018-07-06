@@ -34,7 +34,8 @@ public class SimpleCsvEncoderTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        encoder = new SimpleCsvEncoder(' ');
+        encoder = new SimpleCsvEncoder();
+        encoder.setSeparator(' ');
         encoder.setReceiver(receiver);
     }
 
