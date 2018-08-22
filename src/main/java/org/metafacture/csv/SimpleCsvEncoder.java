@@ -36,7 +36,6 @@ import java.util.stream.Collectors;
  *
  * <P>
  *  Each record represents a row. Each literal value represents a column value.
- *  If a sequence of literals occur share the same name, a nested csv record is used as column value.
  * </P>
  */
 @Description("Encodes each value in a record as a csv row.")
