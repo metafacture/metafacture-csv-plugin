@@ -151,7 +151,7 @@ public class SimpleCsvEncoderTest {
     }
 
     @Test
-    public void shouldCreateNestedCsvInColumn() {
+    public void shouldNotCreateNestedCsvInColumn() {
         encoder.startRecord("1");
         encoder.literal("name", "a");
         encoder.literal("alias", "a1");
