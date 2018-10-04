@@ -69,5 +69,5 @@ encode-csv([separator],[includeHeader],[includeRecordId])
 Flux:
 
 ```
-... | encoder-csv(separator=",", includeRecordId="true") | print;
+... | encode-csv(separator=",", includeRecordId="true") | print;
 ```
