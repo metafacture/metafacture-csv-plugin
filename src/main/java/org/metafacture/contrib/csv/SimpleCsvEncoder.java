@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.metafacture.csv;
+package org.metafacture.contrib.csv;
 
 import com.opencsv.CSVWriter;
 import org.metafacture.framework.FluxCommand;
