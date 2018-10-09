@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metamorph xmlns="http://www.culturegraph.org/metamorph" version="1">
   <rules>
+    <data name="id" source="id.value"/>
     <data name="name" source="name.value"/>
     <choose name="lastname">
-    <data source="lastname.value"/>
-    <data source="_id"><constant value="NA"/></data>
+      <data source="lastname.value"/>
+      <data source="_id"><constant value="NA"/></data>
     </choose>
   </rules>
 </metamorph>
