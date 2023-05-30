@@ -1,3 +1,7 @@
+= ⛔️ DEPRECATED
+
+This plugin is no more needed as https://github.com/metafacture/metafacture-core/pull/486[it is incorporated into metafacture-core].
+
 = metafacture-csv-plugin
 :toc:
 
